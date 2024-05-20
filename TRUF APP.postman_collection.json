@@ -1,0 +1,495 @@
+{
+	"info": {
+		"_postman_id": "c982feca-3827-4409-8604-25d86be92902",
+		"name": "TRUF APP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31679067",
+		"_collection_link": "https://authentic-atk.postman.co/workspace/AUTHENTIC-ATK~e7be53aa-54fd-4d16-8fe1-cb91d357733d/collection/31679067-c982feca-3827-4409-8604-25d86be92902?action=share&source=collection_link&creator=31679067"
+	},
+	"item": [
+		{
+			"name": "New User Registration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Faiq\",\r\n  \"phone_number\": \"1234567890\",\r\n  \"CNIC\": \"1234567890123\",\r\n  \"email\": \"faiq@example.com\",\r\n  \"password\": \"password123\",\r\n  \"role\": \"ground owner\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.0.102:3000/registration_user",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"102"
+					],
+					"port": "3000",
+					"path": [
+						"registration_user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "For Login User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"sara@gmail.com\",\r\n  \"password\": \"ASKsam1387\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.0.102:3000/login_user",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"102"
+					],
+					"port": "3000",
+					"path": [
+						"login_user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch All User Profiles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.0.102:3000/all_users_profiles",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"102"
+					],
+					"port": "3000",
+					"path": [
+						"all_users_profiles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch All Ground Owner's Profiles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.0.102:3000/all_ground_owners_profiles",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"102"
+					],
+					"port": "3000",
+					"path": [
+						"all_ground_owners_profiles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch All Players",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.0.102:3000/all_player_profiles",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"102"
+					],
+					"port": "3000",
+					"path": [
+						"all_player_profiles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add New Player",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "player_name",
+							"value": "Abdul samad",
+							"type": "text"
+						},
+						{
+							"key": "team_name",
+							"value": "Bahria",
+							"type": "text"
+						},
+						{
+							"key": "CNIC",
+							"value": "1234567890120",
+							"type": "text"
+						},
+						{
+							"key": "phone_number",
+							"value": "03223152324",
+							"type": "text"
+						},
+						{
+							"key": "goals",
+							"value": "46",
+							"type": "text"
+						},
+						{
+							"key": "assists",
+							"value": "87",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Striker",
+							"type": "text"
+						},
+						{
+							"key": "player_image",
+							"type": "file",
+							"src": "postman-cloud:///1eee944e-29fb-4770-80f0-f1765bbe37c6"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://192.168.0.102:3000/new_player",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"102"
+					],
+					"port": "3000",
+					"path": [
+						"new_player"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Players Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.0.102:3000/players_records",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"102"
+					],
+					"port": "3000",
+					"path": [
+						"players_records"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add New Ground",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "ground_name",
+							"value": "power play",
+							"type": "text"
+						},
+						{
+							"key": "ground_description",
+							"value": "best",
+							"type": "text"
+						},
+						{
+							"key": "price_per_hour",
+							"value": "5000",
+							"type": "text"
+						},
+						{
+							"key": "location",
+							"value": "karachi",
+							"type": "text"
+						},
+						{
+							"key": "ground_status",
+							"value": "open",
+							"type": "text"
+						},
+						{
+							"key": "CNIC",
+							"value": "1234567890123",
+							"type": "text"
+						},
+						{
+							"key": "ground_image",
+							"type": "file",
+							"src": "postman-cloud:///1eeea858-d9b7-46f0-abff-172558a5954b"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://192.168.0.102:3000/add_ground",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"102"
+					],
+					"port": "3000",
+					"path": [
+						"add_ground"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch All Ground Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.0.102:3000/fetch_grounds_details",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"102"
+					],
+					"port": "3000",
+					"path": [
+						"fetch_grounds_details"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Booking",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"ground_name\": \"KARSAZ FIELD\",\r\n  \"booking_date\": \"2024-05-02\",\r\n  \"booking_slots\": \"06:00-07:00\",\r\n  \"name\": \"Faizan\",\r\n  \"CNIC\": \"4250105176036\",\r\n  \"phone_number\": \"1234567890\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.0.102:3000/post_ground_booking",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"102"
+					],
+					"port": "3000",
+					"path": [
+						"post_ground_booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "fetch Booking",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.0.102:3000/get_ground_booking",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"102"
+					],
+					"port": "3000",
+					"path": [
+						"get_ground_booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "fetch_grounds_by_cnic",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"CNIC\": \"1234567890123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.0.102:3000/fetch_grounds_by_cnic",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"102"
+					],
+					"port": "3000",
+					"path": [
+						"fetch_grounds_by_cnic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "fetch_booking_by_cnic",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"CNIC\": \"4250105176032\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.0.102:3000/fetch_booking_by_cnic",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"102"
+					],
+					"port": "3000",
+					"path": [
+						"fetch_booking_by_cnic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "fetch_player_by_cnic",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"CNIC\": \"4250136755303\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.0.102:3000/fetch_player_by_cnic",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"102"
+					],
+					"port": "3000",
+					"path": [
+						"fetch_player_by_cnic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "gronud by name",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"ground_name\": \"KARSAZ FIELD\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.0.102:3000/fetch_bookings_by_ground_name",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"102"
+					],
+					"port": "3000",
+					"path": [
+						"fetch_bookings_by_ground_name"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "1",
+			"value": "id"
+		}
+	]
+}
