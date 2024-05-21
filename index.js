@@ -29,9 +29,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // MySQL Connection Pool
 const pool = mysql.createPool({
   host: 'node.asahtech.com',
-  user: 'root',
-  password: '',
-  database: 'trs' // Your database name
+  user: 'asahtech_trf',
+  password: '070040@sa070',
+  database: 'trf' // Your database name
 });
 
 // Route to handle POST requests to insert data into the signup table
