@@ -28,7 +28,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // MySQL Connection Pool
 const pool = mysql.createPool({
-  host: 'localhost',
+  host: 'node.asahtech.com',
   user: 'root',
   password: '',
   database: 'trs' // Your database name
@@ -145,7 +145,7 @@ app.get('/all_player_profiles', (req, res) => {
 // POST endpoint to insert data into the player table
 app.post('/new_player', upload.single('player_image'), (req, res) => {
   const { player_name, team_name, CNIC, phone_number, goals, assists, description } = req.body;
-  const picture_url = req.file ? 'http://192.168.0.102:3000/' + req.file.path.replace(/\\/g, '/') : ''; // Construct picture URL
+  const picture_url = req.file ? 'https://node.asahtech.com/' + req.file.path.replace(/\\/g, '/') : ''; // Construct picture URL
 
   // Check if the CNIC already exists in the player table
   const checkCNICQuery = 'SELECT * FROM player WHERE CNIC = ?';
@@ -198,7 +198,8 @@ app.get('/players_records', (req, res) => {
 // POST endpoint to insert data into the ground_detail table
 app.post('/add_ground', upload.single('ground_image'), (req, res) => {
   const { ground_name, ground_description, price_per_hour, location, ground_status, CNIC } = req.body;
-  const image_url = req.file ? 'http://192.168.0.102:3000/' + req.file.path.replace(/\\/g, '/') : ''; // Construct image URL
+  // const image_url = req.file ? 'https://node.asahtech.com/' + req.file.path.replace(/\\/g, '/') : ''; // Construct image URL
+  const image_url = req.file ? 'https://node.asahtech.com/' + req.file.path.replace(/\\/g, '/') : ''; // Construct image URL
 
   // Check if the CNIC exists in the signup table
   const checkCNICQuery = 'SELECT * FROM signup WHERE CNIC = ?';
