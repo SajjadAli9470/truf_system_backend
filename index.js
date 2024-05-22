@@ -29,7 +29,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // MySQL Connection Pool
 const pool = mysql.createPool({
-  host: 'node.asahtech.com',
+  host: 'localhost',
   user: 'asahtech_trf',
   password: '070040@sa070',
   database: 'trf' // Your database name
