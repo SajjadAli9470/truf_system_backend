@@ -37,15 +37,15 @@ app.use(express.json());
 // // Set up static file serving to serve uploaded images
 // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// // MySQL Connection Pool
-// const pool = mysql.createPool({
-//   host: 'localhost',
-//   user:  'root', //'asahtech_trf',
-//   password:  '', //'070040@sa070',
-//   database: 'trf' // Your database name
-// });
+// MySQL Connection Pool
+const pool = mysql.createPool({
+  host: 'localhost',
+  user:  'root', //'asahtech_trf',
+  password:  '', //'070040@sa070',
+  database: 'trf' // Your database name
+});
 
-// console.log("Connected the sql...");
+console.log("Connected the sql...");
 // // Route to handle POST requests to insert data into the signup table
 // app.post('/registration_user', (req, res) => {
 //   // Extract data from the request body
