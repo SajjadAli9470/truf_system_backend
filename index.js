@@ -1,9 +1,18 @@
 
+console.log("Starting the application...");
+
 // Import necessary modules
 const express = require('express');
+
+console.log("Starting the express...");
+
+
 const mysql = require('mysql');
+console.log("Starting the my sql...");
 const multer = require('multer');
+console.log("Starting the multer...");
 const path = require('path');
+console.log("Starting the path...");
 
 // Create an Express application
 const app = express();
@@ -22,6 +31,7 @@ const storage = multer.diskStorage({
     cb(null, filename);
   }
 });
+console.log("Connecting the sql...");
 const upload = multer({ storage: storage });
 
 // Set up static file serving to serve uploaded images
@@ -35,6 +45,7 @@ const pool = mysql.createPool({
   database: 'trf' // Your database name
 });
 
+console.log("Connected the sql...");
 // Route to handle POST requests to insert data into the signup table
 app.post('/registration_user', (req, res) => {
   // Extract data from the request body
@@ -485,7 +496,7 @@ app.post('/fetch_bookings_by_ground_name', (req, res) => {
   });
 });
 
-
+console.log("Connecting the listner...");
 // Start the server
 
 app.listen();
