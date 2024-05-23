@@ -1,18 +1,8 @@
-
-console.log("Starting the application...");
-
 // Import necessary modules
 const express = require('express');
-
-console.log("Starting the express...");
-
-
 const mysql = require('mysql');
-console.log("Starting the my sql...");
 const multer = require('multer');
-console.log("Starting the multer...");
 const path = require('path');
-console.log("Starting the path...");
 
 // Create an Express application
 const app = express();
@@ -31,7 +21,6 @@ const storage = multer.diskStorage({
     cb(null, filename);
   }
 });
-console.log("Connecting the sql...");
 const upload = multer({ storage: storage });
 
 // Set up static file serving to serve uploaded images
@@ -40,12 +29,11 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // MySQL Connection Pool
 const pool = mysql.createPool({
   host: 'localhost',
-  user:  'asahtech_trf',
-  password:  '070040@sa070',
+  user: 'root',
+  password: '',
   database: 'trf' // Your database name
 });
 
-console.log("Connected the sql...");
 // Route to handle POST requests to insert data into the signup table
 app.post('/registration_user', (req, res) => {
   // Extract data from the request body
@@ -157,7 +145,7 @@ app.get('/all_player_profiles', (req, res) => {
 // POST endpoint to insert data into the player table
 app.post('/new_player', upload.single('player_image'), (req, res) => {
   const { player_name, team_name, CNIC, phone_number, goals, assists, description } = req.body;
-  const picture_url = req.file ? 'https://node.asahtech.com/' + req.file.path.replace(/\\/g, '/') : ''; // Construct picture URL
+  const picture_url = req.file ? 'http://192.168.4.105:3000/' + req.file.path.replace(/\\/g, '/') : ''; // Construct picture URL
 
   // Check if the CNIC already exists in the player table
   const checkCNICQuery = 'SELECT * FROM player WHERE CNIC = ?';
@@ -210,8 +198,7 @@ app.get('/players_records', (req, res) => {
 // POST endpoint to insert data into the ground_detail table
 app.post('/add_ground', upload.single('ground_image'), (req, res) => {
   const { ground_name, ground_description, price_per_hour, location, ground_status, CNIC } = req.body;
-  // const image_url = req.file ? 'https://node.asahtech.com/' + req.file.path.replace(/\\/g, '/') : ''; // Construct image URL
-  const image_url = req.file ? 'https://node.asahtech.com/' + req.file.path.replace(/\\/g, '/') : ''; // Construct image URL
+  const image_url = req.file ? 'http://192.168.4.105:3000/' + req.file.path.replace(/\\/g, '/') : ''; // Construct image URL
 
   // Check if the CNIC exists in the signup table
   const checkCNICQuery = 'SELECT * FROM signup WHERE CNIC = ?';
@@ -495,22 +482,66 @@ app.post('/fetch_bookings_by_ground_name', (req, res) => {
     res.status(200).json(results);
   });
 });
+// API endpoint to fetch all bookings by ground owner CNIC
+app.post('/cnic', (req, res) => {
+  const { owner_cnic } = req.body;
 
-console.log("Connecting the listner...");
-// Start the server
+  if (!owner_cnic) {
+    return res.status(400).json({ error: 'Owner CNIC is required' });
+  }
 
-app.listen(
+  // Step 1: Get all ground IDs owned by the owner
+  pool.query('SELECT ground_id FROM ground_detail WHERE CNIC = ?', [owner_cnic], (err, groundResults) => {
+    if (err) {
+      console.error('Error fetching ground IDs:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
 
-);
+    if (groundResults.length === 0) {
+      return res.status(404).json({ error: 'No grounds found for the given CNIC' });
+    }
 
-// // const PORT = process.env.PORT || 3000;
-// // app.listen(PORT, () => {
-// //   console.log(`Server is running on port ${PORT}`);
-// // });
+    const groundIds = groundResults.map(result => result.ground_id);
 
+    // Step 2: Get all bookings for the retrieved ground IDs along with ground details
+    const query = `
+      SELECT gb.*
+      FROM ground_booking gb
+      JOIN ground_detail gd WHERE gb.ground_name = gd.ground_name
+      
+    `;
+    pool.query(query, [groundIds], (err, bookingResults) => {
+      if (err) {
+        console.error('Error fetching bookings:', err);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
 
-// const port = parseInt(process.env.PORT) || 8080;
-// app.listen(port, () => {
-//   console.log(`helloworld: listening on port ${port}`);
+      res.status(200).json({ bookings: bookingResults });
+    });
+  });
+});
+// POST endpoint to fetch ground bookings by ground name
+// app.post('/cnic', (req, res) => {
+//   const { cnic } = req.body;
+
+//   // Perform the database query to fetch bookings for the provided ground name
+//   const query = 'SELECT * FROM ground_booking g,signup s WHERE ';  
+
+//   pool.query(query, [cnic], (error, results) => {
+//     if (error) {
+//       console.error('Error fetching bookings wrt CNIC:', error);
+//       return res.status(500).json({ error: 'Error fetching bookings wrt CNIC' });
+//     }
+//     // If there are no errors, return the fetched bookings
+//     res.status(200).json(results);
+//   });
 // });
 
+
+
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
