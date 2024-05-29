@@ -31,7 +31,7 @@ const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'trf' // Your database name
+  database: 'asahtech_trf' // Your database name
 });
 
 // Route to handle POST requests to insert data into the signup table
@@ -77,6 +77,7 @@ app.post('/login_user', (req, res) => {
   pool.query('SELECT email, password, phone_number, role, CNIC FROM signup WHERE email = ? AND password = ?',
     [email, password],
     (error, results, fields) => {
+      
       if (error) {
         console.error('Error checking login credentials:', error);
         return res.status(500).json({ error: 'Internal server error' });
@@ -85,6 +86,7 @@ app.post('/login_user', (req, res) => {
       // Check if any rows were returned
       if (results.length === 0) {
         // No matching user found
+        console.log(fields);
         return res.status(401).json({ error: 'Invalid email or password' });
       }
 
@@ -144,7 +146,7 @@ app.get('/all_player_profiles', (req, res) => {
 // Your existing route to handle POST requests to insert data into the player table
 // POST endpoint to insert data into the player table
 app.post('/new_player', upload.single('player_image'), (req, res) => {
-  const { player_name, team_name, CNIC, phone_number, goals, assists, description } = req.body;
+  const { player_name, team_name, CNIC, phone_number, goals, assists, description,position } = req.body;
   const picture_url = req.file ? 'http://192.168.4.105:3000/' + req.file.path.replace(/\\/g, '/') : ''; // Construct picture URL
 
   // Check if the CNIC already exists in the player table
@@ -163,8 +165,8 @@ app.post('/new_player', upload.single('player_image'), (req, res) => {
     }
 
     // CNIC does not exist, proceed to insert data into the player table
-    const insertQuery = 'INSERT INTO player (player_name, team_name, CNIC, phone_number, goals, assists, description, picture_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-    const values = [player_name, team_name, CNIC, phone_number, goals, assists, description, picture_url];
+    const insertQuery = 'INSERT INTO player (player_name, team_name, CNIC, phone_number, goals, assists, description, picture_url,position) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)';
+    const values = [player_name, team_name, CNIC, phone_number, goals, assists, description, picture_url,position];
 
     pool.query(insertQuery, values, (err, result) => {
       if (err) {
@@ -197,8 +199,8 @@ app.get('/players_records', (req, res) => {
 //----------------------------------------------------------------------------
 // POST endpoint to insert data into the ground_detail table
 app.post('/add_ground', upload.single('ground_image'), (req, res) => {
-  const { ground_name, ground_description, price_per_hour, location, ground_status, CNIC } = req.body;
-  const image_url = req.file ? 'http://192.168.4.105:3000/' + req.file.path.replace(/\\/g, '/') : ''; // Construct image URL
+  const { ground_name, ground_description, price_per_hour, location, ground_status, CNIC,lng,lat } = req.body;
+  const image_url = req.file ? 'http://192.168.4.113:3000/' + req.file.path.replace(/\\/g, '/') : ''; // Construct image URL
 
   // Check if the CNIC exists in the signup table
   const checkCNICQuery = 'SELECT * FROM signup WHERE CNIC = ?';
@@ -229,8 +231,8 @@ app.post('/add_ground', upload.single('ground_image'), (req, res) => {
       }
 
       // Ground data does not exist, proceed to insert into the ground_detail table
-      const insertQuery = 'INSERT INTO ground_detail (ground_name, ground_description, price_per_hour, location, image_data, ground_status, CNIC) VALUES (?, ?, ?, ?, ?, ?, ?)';
-      const values = [ground_name, ground_description, price_per_hour, location, image_url, ground_status, CNIC];
+      const insertQuery = 'INSERT INTO ground_detail (ground_name, ground_description, price_per_hour, location, image_data, ground_status, CNIC,lng,lat) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)';
+      const values = [ground_name, ground_description, price_per_hour, location, image_url, ground_status, CNIC,lng,lat];
 
       pool.query(insertQuery, values, (err, result) => {
         if (err) {
