@@ -1,4 +1,4 @@
-// Import necessary modules
+
 const express = require('express');
 const mysql = require('mysql');
 const multer = require('multer');
@@ -176,6 +176,40 @@ app.post('/new_player', upload.single('player_image'), (req, res) => {
       }
       console.log('Data inserted successfully');
       res.status(200).json({ message: 'Data inserted successfully' });
+    });
+  });
+});
+app.post('/edit_player', (req, res) => {
+  
+  const { player_name, team_name, CNIC, phone_number, goals, assists, description,position} = req.body;
+  
+  console.log(req.body);
+  // Check if the CNIC already exists in the player table
+  const checkCNICQuery = 'SELECT * FROM player WHERE CNIC = ?';
+  pool.query(checkCNICQuery, [CNIC], (checkErr, checkResult) => {
+    if (checkErr) {
+      console.error('Error checking CNIC:', checkErr);
+      res.status(500).json({ error: 'Error checking CNIC' });
+      return;
+    }
+ 
+
+    console.log(CNIC);
+    console.log(team_name);
+
+    // CNIC does not exist, proceed to insert data into the player table
+    const updateQuery = 'UPDATE player SET player_name = ?, team_name = ?, phone_number = ?, goals = ?, assists = ?, description = ?, position = ? WHERE CNIC = ?';
+    const values = [player_name, team_name, phone_number, goals, assists, description, position, CNIC];
+    
+
+    pool.query(updateQuery, values, (err, result) => {
+      if (err) {
+        console.error('Inavlid Cnic, Use same Cnic you used while registering:', err);
+        res.status(500).json({ error: 'Inavlid Cnic, Use same Cnic you used while registering' });
+        return;
+      }
+      console.log('Data Updated successfully');
+      res.status(200).json({ message: 'Data Updated successfully' });
     });
   });
 });
